@@ -3,9 +3,56 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
+const hearts = document.querySelectorAll('.like-glyph')
+function likeCallback(e) {
+  const heart = e.target;
+  mimicServerCall("bogusUrl")
+    .then(function(){
+      if ( heart.innerText === EMPTY_HEART) {
+        heart.innerText = FULL_HEART;
+        heart.className = "activated-heart";
+      } else {
+        heart.innerText = EMPTY_HEART;
+        heart.className = "";
+      }
+    })
+    .catch(function(error) {
+      const modal = document.getElementById("modal");
+      modal.className = "";
+      modal.innerText = error;
+      setTimeout(() =>  modal.className = "hidden", 3000);
+    });
+}
 
+for (const glyph of articleHearts) {
+  glyph.addEventListener("click", likeCallback);
+} 
 
-
+// function simpleLiker (e) {
+//   const heart = e.target
+//   mimicServerCall(url)
+//   // .then(res => res.json())
+//   .then(() => {
+//     if (heart.innerText === EMPTY_HEART){
+//       heart.innerText = FULL_HEART
+//       heart.className = "activated-heart"
+//     }else{
+//       heart.innerText = EMPTY_HEART
+//       heart.className = ""
+//     }
+//   })
+//   .catch((error) => {
+//     const modal = document.getElementById("modal")
+//     modal.innerText = error
+//     modal.className = ""
+//     setTimeout (function() {
+//       return modal.className = "hidden", 3000
+//     })
+//   })
+//   hearts.forEach(glyph => {
+//     glyph.addEventListener('click', simpleLiker())
+//   })
+//  }
 
 //------------------------------------------------------------------------------
 // Don't change the code below: this function mocks the server response
